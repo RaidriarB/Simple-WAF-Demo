@@ -1,0 +1,2 @@
+cd src
+python3 proxy_demo.py

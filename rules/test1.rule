@@ -1,3 +1,5 @@
 BLOCK .*id=evil.*
 BLOCK .*id=ev[0-9].*il.*
+
+# 这行是出错的
 this is a test line

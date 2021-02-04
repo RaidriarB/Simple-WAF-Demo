@@ -6,8 +6,6 @@ from filter import do_filter,init_filter
 # 被代理的真实地址和端口
 REAL_HOST = '47.105.47.47'
 REAL_PORT = 8000
-# REAL_HOST = 'blog.arklight.xyz'
-# REAL_PORT = 80
 
 # 代理服务器的工作地址和端口
 PROXY_HOST = '127.0.0.1'
@@ -37,7 +35,7 @@ def do_response(client_conn,proxy_req,action):
 	elif action == ACTION_BLOCK:
 		do_response_block(client_conn,proxy_req)
 	elif action == ACTION_LOG:
-		print("log")
+		print("log it")
 		pass
 	else:
 		pass
@@ -47,7 +45,7 @@ def do_response_pass(client_conn,client_req):
 	proxy_req = client_req.replace(PROXY_HOST+':'+str(PROXY_PORT), REAL_HOST+':'+str(REAL_PORT))\
 		.replace('keep-alive', 'close').replace('gzip','')
 
-	print("替换后的请求\n"+proxy_req.split("\n",1)[0])
+	# print("替换后的请求\n"+proxy_req.split("\n",1)[0])
 
 	proxy_client_socket = socket.socket()
 	proxy_client_socket.connect((REAL_HOST, REAL_PORT))
@@ -92,7 +90,7 @@ def handle(client_conn):
 			if len(buf) < 2048:
 				break
 
-		print("原始请求\n" + client_req.split("\n",1)[0])
+		# print("原始请求\n" + client_req.split("\n",1)[0])
 	except:
 		print("超时了，接收到的信息如下\n"+client_req)
 		return
@@ -116,8 +114,7 @@ def proxy_main_loop():
 	while True:
 		# 每来一个连接开新线程
 		client_conn, addr = proxy_server_socket.accept()
-
-		print(addr)
+		# print(addr)
 		# 加入连接池
 		proxy_conn_pool.append(client_conn)
 
