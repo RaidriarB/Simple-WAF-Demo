@@ -12,7 +12,7 @@ PROXY_HOST = '127.0.0.1'
 PROXY_PORT = 1025
 
 # 每个客户端发起的连接的timeout
-client_socket_timeout = 2
+CLIENT_SOCKET_TIMEOUT = 2
 
 # 状态码
 ACTION_BLOCK = "BLOCK"
@@ -80,7 +80,7 @@ def do_response_block(client_conn,client_req):
 
 def handle(client_conn):
 	client_req = ''
-	client_conn.settimeout(client_socket_timeout)
+	client_conn.settimeout(CLIENT_SOCKET_TIMEOUT)
 
 	try:
 		# 缓冲区不满说明读取完了，否则还应继续读取

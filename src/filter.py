@@ -78,6 +78,12 @@ def do_filter_rule_list(msg,compiled_rules):
 	print("no rules matched,pass\n")
 	return ACTION_PASS
 
+def do_filter_blacklist():
+	pass
+
+def do_filter_whitelist():
+	pass
+
 def test():
 	compiled_rules = init_filter()
 	print("inited.\n")
