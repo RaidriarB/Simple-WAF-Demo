@@ -1,2 +1,2 @@
 cd src
-python3 proxy_demo.py
+python3 main.py

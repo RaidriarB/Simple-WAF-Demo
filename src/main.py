@@ -6,6 +6,7 @@ from filter import do_filter,init_filter
 from response import do_response
 from log import do_log
 import constants as C
+from utils import log
 
 # 全局变量，代理主socket和连接池
 proxy_server_socket = None
@@ -30,12 +31,16 @@ def handle(client_conn):
 				break
 
 		# print("原始请求\n" + client_req.split("\n",1)[0])
-	except:
+	except Exception as e:
 		print("超时了，接收到的信息如下\n"+client_req)
+		print(e)
+		return
+	
+	if not client_req:
+		log("出现空请求，丢弃")
 		return
 
 	action = do_filter(client_req,compiled_rules)
-
 	do_response(client_conn,client_req,action)
 
 def proxy_main_loop():
