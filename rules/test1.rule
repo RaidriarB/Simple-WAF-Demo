@@ -1,0 +1,3 @@
+BLOCK .*id=evil.*
+BLOCK .*id=ev[0-9].*il.*
+this is a test line
