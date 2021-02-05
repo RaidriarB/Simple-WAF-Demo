@@ -55,7 +55,8 @@ def proxy_main_loop():
 	# 初始化 server socket
 	proxy_server_socket = socket.socket()
 	proxy_server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-	proxy_server_socket.bind((C.PROXY_HOST, C.PROXY_PORT))
+	# proxy_server_socket.bind((C.PROXY_HOST, C.PROXY_PORT))
+	proxy_server_socket.bind(("0.0.0.0", C.PROXY_PORT))
 	proxy_server_socket.listen(1024)
 
 	while True:
