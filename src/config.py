@@ -9,15 +9,29 @@
 # 2 只输出2级红色warning信息
 DEBUG_LEVEL = 0
 
-# 被代理的真实地址和端口
-# 如果在本机，直接写127.0.0.1即可
-REAL_HOST = '127.0.0.1'
-REAL_PORT = 8000
+# 本地测试还是部署到服务器
+LOCAL_DEBUG = True
 
-# 代理服务器的工作地址和端口
-# 即用户访问的地址和端口
-PROXY_HOST = '47.105.47.47'
-PROXY_PORT = 80
+if LOCAL_DEBUG:
+	# 被代理的真实地址和端口
+	# 如果在本机，直接写127.0.0.1即可
+	REAL_HOST = '47.105.47.47'
+	REAL_PORT = 8000
+
+	# 代理服务器的工作地址和端口
+	# 即用户访问的地址和端口
+	PROXY_HOST = '127.0.0.1'
+	PROXY_PORT = 9999
+else:
+	# 被代理的真实地址和端口
+	# 如果在本机，直接写127.0.0.1即可
+	REAL_HOST = '127.0.0.1'
+	REAL_PORT = 8000
+
+	# 代理服务器的工作地址和端口
+	# 即用户访问的地址和端口
+	PROXY_HOST = '47.105.47.47'
+	PROXY_PORT = 80
 
 # 每个客户端发起的连接timeout
 CLIENT_SOCKET_TIMEOUT = 10

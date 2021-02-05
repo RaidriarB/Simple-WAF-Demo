@@ -9,7 +9,13 @@
 ```
 git clone https://github.com/RaidriarB/ByteDanceProject-WAF-core.git
 cd ByteDanceProject-WAF-core
-chmod +x ./start-waf
+
+# 使用虚拟环境
+# Mac/Linux下
+source venv/bin/activate
+# Windows下
+venv/bin/activate.bat
+
 ./start-waf
 ```
 
