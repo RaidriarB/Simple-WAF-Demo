@@ -1,17 +1,19 @@
 import os
 import re
 
-import constants as C
+import config as C
 import dbutils
 from utils import log
 
+'''
+从数据库中初始化规则列表
+@return 规则列表
+'''
 def init_filter():
 
 	log("正在加载规则...",1)
 	compiled_rules = []
-
 	conn = dbutils.get_conn()
-
 	rules = dbutils.get_rules(conn)
 
 	for rule in rules:
@@ -35,18 +37,27 @@ def init_filter():
 	log("规则加载完毕。",1)
 	return compiled_rules
 
+'''
+判断请求，返回动作代码
+其中分为很多部分
+'''
 def do_filter(client_req,compiled_rules):
-
 	action = do_filter_rule_list(client_req,compiled_rules)
 	# TODO:
 	# 接下来还需要黑白名单判断
 	return action
 
+'''
+还原TrunkedEncoding消息，防止bypass
+'''
 def rebuild_trunked_encoding(msg):
 	# TODO
 	pass
 
-# 从规则列表中匹配
+'''
+从数据库中的规则列表匹配
+默认放行
+'''
 def do_filter_rule_list(msg,compiled_rules):
 
 	line = msg.split("\n")[0]
@@ -62,14 +73,22 @@ def do_filter_rule_list(msg,compiled_rules):
 	log("no rules matched,pass\n",1)
 	return C.ACTION_PASS
 
+'''
+从黑名单匹配
+'''
 def do_filter_blacklist():
+	# TODO
 	pass
 
+'''
+从白名单匹配
+'''
 def do_filter_whitelist():
+	# TODO
 	pass
+
 
 def test():
 	compiled_rules = init_filter()
 	log("inited.\n",1)
-
 # test()

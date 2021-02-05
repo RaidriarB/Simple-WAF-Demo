@@ -1,5 +1,14 @@
-import constants as C
+'''
+一些常用的小工具，包括日志
+'''
 
+import config as C
+
+'''
+一个日志输出工具，可以指定级别。
+0:正常白色输出 1:debug级别绿色 2:warning级别红色
+设置全局选项DEBUG_LEVEL，可以决定日志显示的类别
+'''
 def log(message,level=0,):
 
 	prefix0 = ""
@@ -24,6 +33,7 @@ def log(message,level=0,):
 	print("\033[0m",end='')
 
 # 修改文件中某一行
+# 没啥用
 def edit_line(file,lineno,newline):
 	# 删除文件第n行
 	import os
@@ -46,6 +56,6 @@ def edit_line(file,lineno,newline):
 		return False
 
 # 删除文件中某一行
+# 也没啥用
 def delete_line(file,lineno):
 	return edit_line(file,lineno,'')
-

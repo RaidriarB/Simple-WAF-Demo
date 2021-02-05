@@ -1,4 +1,8 @@
-import constants as C
+'''
+数据库相关接口
+'''
+
+import config as C
 import sqlite3
 
 def get_conn():

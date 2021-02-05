@@ -1,7 +1,7 @@
 import os
 import re
 
-import constants as C
+import config as C
 from utils import log
 
 '''

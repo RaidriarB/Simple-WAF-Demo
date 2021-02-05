@@ -11,4 +11,4 @@
 
 尝试一下`http://127.0.0.1:1025/student/gpa?id=evil`，应该被拦截
 
-所有的配置都写在`constants.py`中
+所有的配置都写在`config.py`中

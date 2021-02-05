@@ -1,8 +1,11 @@
 import socket
 
-import constants as C
+import config as C
 from utils import log
 
+'''
+根据动作代码决定处理方法
+'''
 def do_response(client_conn,proxy_req,action):
 	if action == C.ACTION_PASS:
 		do_response_pass(client_conn,proxy_req)
@@ -14,15 +17,15 @@ def do_response(client_conn,proxy_req,action):
 	else:
 		pass
 
+'''
+动作是PASS，放行
+'''
 def do_response_pass(client_conn,client_req):
-	# 开始代理请求
 	proxy_addr = C.PROXY_HOST+':'+str(C.PROXY_PORT)
 	real_addr = C.REAL_HOST+':'+str(C.REAL_PORT)
 
 	proxy_req = client_req.replace(proxy_addr, real_addr)\
 		.replace('keep-alive', 'close').replace('gzip','')
-
-	# log("替换后的请求\n"+proxy_req.split("\n",1)[0])
 
 	proxy_client_socket = socket.socket()
 	proxy_client_socket.connect((C.REAL_HOST, C.REAL_PORT))
@@ -49,6 +52,9 @@ def do_response_pass(client_conn,client_req):
 	client_conn.sendall(proxy_resp)
 	client_conn.close()
 
+'''
+动作是BLOCK，拦截
+'''
 def do_response_block(client_conn,client_req):
 
 	block_message = b'HTTP/1.1 200 OK\r\nHost: 127.0.0.1:1025\r\nDate: Tue, 02 Feb 2021 11:18:17 GMT\r\nConnection: close\r\nX-Powered-By: PHP/7.3.22-(to be removed in future macOS)\r\nContent-type: text/html; charset=UTF-8\r\n\r\nWAF Blocked!'
@@ -58,4 +64,8 @@ def do_response_block(client_conn,client_req):
 
 	log("waf blocked",1)
 
-
+'''
+动作是LOG
+'''
+def do_response_log(client_conn,client_req):
+	pass
