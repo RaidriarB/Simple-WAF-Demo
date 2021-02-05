@@ -61,7 +61,10 @@ def rebuild_trunked_encoding(msg):
 def do_filter_rule_list(msg,compiled_rules):
 
 	line = msg.split("\n")[0]
-	log(line,1)
+	
+	log("根据规则判断",0)
+	log(line,0)
+
 	if not line:
 		print(msg)
 	# 短路判断，默认放行
@@ -70,7 +73,7 @@ def do_filter_rule_list(msg,compiled_rules):
 		if re.search(rule,msg) is not None:
 			log("action:"+action,1)
 			return action
-	log("no rules matched,pass\n",1)
+	log("no rules matched,PASS\n",1)
 	return C.ACTION_PASS
 
 '''

@@ -30,10 +30,10 @@ def handle(client_conn):
 			client_req += buf
 			if len(buf) < BUF_SIZE:
 				break
-		log("接收到请求\n" + client_req,1)
+		log("接收到请求:\n------\n" + client_req + '\n------',1)
 
 	except Exception as e:
-		print("超时了，接收到的信息如下\n"+client_req)
+		print("超时了，接收到的信息如下\n-------\n"+client_req+"\n------")
 		print(e)
 		return
 	
@@ -43,6 +43,7 @@ def handle(client_conn):
 
 	action = do_filter(client_req,compiled_rules)
 	do_response(client_conn,client_req,action)
+	log("-----------请求处理完毕。---------",1)
 
 
 '''
@@ -66,6 +67,10 @@ def proxy_main_loop():
 		# 每来一个连接创建新线程，加入连接池
 		client_conn, addr = proxy_server_socket.accept()
 		proxy_conn_pool.append(client_conn)
+
+		log("建立连接",1)
+		log(str(client_conn.getpeername())+"-->"+str(client_conn.getsockname()),1)
+
 		thread = Thread(target = handle, args=(client_conn,))
 		thread.setDaemon(True)
 		thread.start()

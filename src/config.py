@@ -11,13 +11,13 @@ DEBUG_LEVEL = 0
 
 # 被代理的真实地址和端口
 # 如果在本机，直接写127.0.0.1即可
-REAL_HOST = '127.0.0.1'
+REAL_HOST = '47.105.47.47'
 REAL_PORT = 8000
 
 # 代理服务器的工作地址和端口
 # 即用户访问的地址和端口
-PROXY_HOST = '47.105.47.47'
-PROXY_PORT = 80
+PROXY_HOST = '127.0.0.1'
+PROXY_PORT = 9999
 
 # 每个客户端发起的连接timeout
 CLIENT_SOCKET_TIMEOUT = 10
