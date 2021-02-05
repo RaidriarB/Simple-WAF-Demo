@@ -37,7 +37,8 @@ def do_response_pass(client_conn,client_req):
 		if not buf or buf.startswith(b'WebSocket') and buf.endswith(b'\r\n\r\n'):
 			break
 	
-	log("服务器回应：\n"+target_resp)
+	log("服务器回应：\n",1)
+	print(target_resp[:300])
 
 	proxy_resp = target_resp.replace(b'Content-Encoding: gzip\r\n', b'')\
 		.replace(C.REAL_HOST.encode(), (C.PROXY_HOST+':'+str(C.PROXY_PORT)).encode())
