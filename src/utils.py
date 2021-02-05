@@ -17,7 +17,7 @@ def log(message,level=0,):
 	else:
 		raise ValueError("level cannot be "+level+".")
 
-	if C.DEBUG_LEVEL >= level:
+	if C.DEBUG_LEVEL <= level:
 		print(output)
 
 	# 还原颜色

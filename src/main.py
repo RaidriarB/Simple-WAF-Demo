@@ -30,7 +30,8 @@ def handle(client_conn):
 			if len(buf) < 2048:
 				break
 
-		# print("原始请求\n" + client_req.split("\n",1)[0])
+		log("接收到请求\n" + client_req)
+		
 	except Exception as e:
 		print("超时了，接收到的信息如下\n"+client_req)
 		print(e)
