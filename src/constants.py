@@ -11,8 +11,8 @@ REAL_HOST = '47.105.47.47'
 REAL_PORT = 8000
 
 # 代理服务器的工作地址和端口
-PROXY_HOST = '127.0.0.1'
-PROXY_PORT = 9999
+PROXY_HOST = '47.105.47.47'
+PROXY_PORT = 80
 
 # 每个客户端发起的连接的timeout
 CLIENT_SOCKET_TIMEOUT = 10
@@ -26,7 +26,7 @@ ACTION_LOG = "LOG"
 RULE_PATH = "../rules/"
 
 # 数据库文件
-DATABASE_PATH = "../db/test.db"
+DATABASE_PATH = "../db/data.db"
 DB_NAME_RULES = "rules"
 DB_NAME_LOGS = "log"
 DB_NAME_FULL_LOG = "full_log"

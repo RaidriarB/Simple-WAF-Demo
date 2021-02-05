@@ -16,7 +16,10 @@ def do_response(client_conn,proxy_req,action):
 
 def do_response_pass(client_conn,client_req):
 	# 开始代理请求
-	proxy_req = client_req.replace(C.PROXY_HOST+':'+str(C.PROXY_PORT), C.REAL_HOST+':'+str(C.REAL_PORT))\
+	proxy_addr = C.PROXY_HOST+':'+str(C.PROXY_PORT)
+	real_addr = C.REAL_HOST+':'+str(C.REAL_PORT)
+
+	proxy_req = client_req.replace(proxy_addr, real_addr)\
 		.replace('keep-alive', 'close').replace('gzip','')
 
 	# log("替换后的请求\n"+proxy_req.split("\n",1)[0])
@@ -41,7 +44,7 @@ def do_response_pass(client_conn,client_req):
 	print(target_resp[:300])
 
 	proxy_resp = target_resp.replace(b'Content-Encoding: gzip\r\n', b'')\
-		.replace(C.REAL_HOST.encode(), (C.PROXY_HOST+':'+str(C.PROXY_PORT)).encode())
+		.replace((real_addr).encode(), (proxy_addr).encode())
 
 	client_conn.sendall(proxy_resp)
 	client_conn.close()
