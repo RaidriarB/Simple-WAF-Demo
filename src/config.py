@@ -9,8 +9,10 @@
 # 2 只输出2级红色warning信息
 DEBUG_LEVEL = 0
 
+################################################################
 # 本地测试还是部署到服务器
 LOCAL_DEBUG = True
+CONTROLLER_PORT = 12345
 
 if LOCAL_DEBUG:
 	# 被代理的真实地址和端口
@@ -33,6 +35,8 @@ else:
 	PROXY_HOST = '47.105.47.47'
 	PROXY_PORT = 80
 
+################################################################
+
 # 每个客户端发起的连接timeout
 CLIENT_SOCKET_TIMEOUT = 10
 
@@ -40,6 +44,12 @@ CLIENT_SOCKET_TIMEOUT = 10
 ACTION_BLOCK = "BLOCK"
 ACTION_PASS = "PASS"
 ACTION_LOG = "LOG"
+
+
+# 控制端信号：更新规则
+CONTROL_UPDATE = "<-UPDATE->"
+# 控制端信号：确认存活
+CONTROL_CONFIRM = "<-CONFIRM->"
 
 # 使用文件存放规则的目录
 RULE_PATH = "../rules/"

@@ -1,6 +1,6 @@
 import socket,sqlite3
 
-from threading import Thread
+from threading import Thread,Lock
 
 from filter import do_filter,init_filter
 from response import do_response
@@ -13,12 +13,21 @@ proxy_server_socket = None
 proxy_conn_pool = []
 
 # 全局变量，编译好的规则列表
+# 规则热更新通过修改该变量的引用
 compiled_rules = None
 
 # 全局变量，数据库连接
 db_conn = None
 
-def handle(client_conn):
+# 互斥锁
+lock = Lock()
+
+'''
+处理请求
+'''
+def handle_socket(client_conn):
+
+	global compiled_rules
 
 	BUF_SIZE = 2048 # 缓冲区大小
 	client_req = ''
@@ -45,6 +54,79 @@ def handle(client_conn):
 	do_response(client_conn,client_req,action)
 	log("-----------请求处理完毕。---------",1)
 
+'''
+WAF核心模块控制连接，用于异步更新、确认存活等
+'''
+def handle_controller():
+
+	log("已经开启控制连接",1)
+	global compiled_rules
+	
+	# 初始化 server socket
+	controller_server_socket = socket.socket()
+	controller_server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+	controller_server_socket.bind(("0.0.0.0", C.CONTROLLER_PORT))
+	controller_server_socket.listen(1024)
+
+	while True:
+		conn,addr = controller_server_socket.accept()
+
+		log("建立控制连接",1)
+		log(str(conn.getpeername())+"-->"+str(conn.getsockname()),1)
+
+		thread = Thread(target = handle_ctlmsg, args=(conn,))
+		thread.setDaemon(True)
+		thread.start()
+
+	log("控制连接出错",2)
+
+'''
+处理控制信息
+'''
+def handle_ctlmsg(conn):
+	msg = ''
+	BUF_SIZE = 1024
+	try:
+		# 缓冲区不满说明读取完毕，否则还应继续读取
+		while True:
+			buf = conn.recv(BUF_SIZE).decode('utf-8')
+			msg += buf
+			if len(buf) < BUF_SIZE:
+				break
+		log("接收到控制信息: " + msg ,1)
+	except Exception as e:
+		print("超时了，接收到的信息如下:"+msg)
+		print(e)
+		conn.close()
+		return
+
+	if not msg:
+		log("出现空请求，丢弃",1)
+		conn.close()
+		return
+
+	msg = msg.strip()
+
+	if msg == C.CONTROL_UPDATE:
+
+		# 我总觉得这里需要try一下
+		temp_compiled_rules = init_filter()
+		# 加锁处理
+		lock.acquire(True)
+		compiled_rules = temp_compiled_rules
+		lock.release()
+		conn.sendall("FINISHED".encode())
+		conn.close()
+		log("完成规则更新",1)
+	elif msg == C.CONTROL_CONFIRM:
+		conn.sendall(C.CONTROL_CONFIRM.encode())
+		conn.close()
+		log("心跳包，确认存活",0)
+	else:
+		conn.sendall("INVALID COMMAND".encode())
+		conn.close()
+		log("非法信息！",2)
+
 
 '''
 初始化工作、代理主循环
@@ -63,6 +145,11 @@ def proxy_main_loop():
 	proxy_server_socket.bind(("0.0.0.0", C.PROXY_PORT))
 	proxy_server_socket.listen(1024)
 
+	# 开启控制线程
+	control_thread = Thread(target = handle_controller)
+	control_thread.setDaemon(True)
+	control_thread.start()
+
 	while True:
 		# 每来一个连接创建新线程，加入连接池
 		client_conn, addr = proxy_server_socket.accept()
@@ -71,7 +158,7 @@ def proxy_main_loop():
 		log("建立连接",1)
 		log(str(client_conn.getpeername())+"-->"+str(client_conn.getsockname()),1)
 
-		thread = Thread(target = handle, args=(client_conn,))
+		thread = Thread(target = handle_socket, args=(client_conn,))
 		thread.setDaemon(True)
 		thread.start()
 

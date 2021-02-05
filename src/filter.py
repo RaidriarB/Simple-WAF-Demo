@@ -13,6 +13,8 @@ def init_filter():
 
 	log("正在加载规则...",1)
 	compiled_rules = []
+	failed_rules = []
+
 	conn = dbutils.get_conn()
 	rules = dbutils.get_rules(conn)
 
@@ -32,7 +34,7 @@ def init_filter():
 			compiled_rules.append(compiled_rule)
 		except:
 			log("编译出错，出错的条目为",2)
-			print(rule)
+			log(str(rule),2)
 
 	log("规则加载完毕。",1)
 	return compiled_rules
