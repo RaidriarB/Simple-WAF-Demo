@@ -3,3 +3,6 @@ src/__pycache__/
 
 # Mac Finder autogen
 .DS_Store
+
+# venv folder
+venv/*
