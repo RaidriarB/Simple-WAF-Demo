@@ -1,0 +1,5 @@
+# python cache files
+src/__pycache__/
+
+# Mac Finder autogen
+.DS_Store
