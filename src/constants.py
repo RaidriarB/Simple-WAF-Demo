@@ -12,7 +12,7 @@ REAL_PORT = 8000
 
 # 代理服务器的工作地址和端口
 PROXY_HOST = '127.0.0.1'
-PROXY_PORT = 1025
+PROXY_PORT = 9999
 
 # 每个客户端发起的连接的timeout
 CLIENT_SOCKET_TIMEOUT = 10
