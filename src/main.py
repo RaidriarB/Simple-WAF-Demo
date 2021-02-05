@@ -19,6 +19,8 @@ compiled_rules = None
 db_conn = None
 
 def handle(client_conn):
+
+	log("开了个新线程")
 	client_req = ''
 	client_conn.settimeout(C.CLIENT_SOCKET_TIMEOUT)
 
@@ -31,7 +33,7 @@ def handle(client_conn):
 				break
 
 		log("接收到请求\n" + client_req)
-		
+
 	except Exception as e:
 		print("超时了，接收到的信息如下\n"+client_req)
 		print(e)
