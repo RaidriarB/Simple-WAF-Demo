@@ -44,6 +44,9 @@ def init_filter():
 其中分为很多部分
 '''
 def do_filter(client_req,compiled_rules):
+
+	client_req = rebuild_trunked_encoding(client_req)
+	
 	action = do_filter_rule_list(client_req,compiled_rules)
 	# TODO:
 	# 接下来还需要黑白名单判断
@@ -53,8 +56,26 @@ def do_filter(client_req,compiled_rules):
 还原TrunkedEncoding消息，防止bypass
 '''
 def rebuild_trunked_encoding(msg):
-	# TODO
-	pass
+
+	if "transfer-encoding: chunked" not in msg.lower():
+		return msg
+	else:
+		try:
+			headers,body = msg.split("\n\n",1)
+		except:
+			try:
+				headers,body = msg.split("\r\n\r\n",1)
+			except:
+				return msg
+
+		data = re.split(r"[0-9]+;.*",body)
+
+		new_msg = ''
+		for each in data:
+			new_msg += each.replace("\r",'').replace("\n",'')
+
+		print(new_msg)
+		return new_msg
 
 '''
 从数据库中的规则列表匹配
@@ -94,6 +115,5 @@ def do_filter_whitelist():
 
 
 def test():
-	compiled_rules = init_filter()
-	log("inited.\n",1)
-# test()
+	rebuild_trunked_encoding("header1\ntransfer-encoding: chunked\nheadern\n\n2;18f9*ja\n1' o\n6;f1dfsdv\nr 1=1")
+test()

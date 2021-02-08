@@ -11,12 +11,28 @@ def get_conn():
 def execute(conn,sql):
 	return conn.cursor().execute(sql)
 
-def get_rules(conn):
-	sql = "select * from {};".format(C.DB_NAME_RULES)
-	return execute(conn,sql)
-
 def get_logs(conn):
 	sql = "select * from {};".format(C.DB_NAME_LOGS)
+	return execute(conn,sql)
+
+def add_log(conn,time,ip,url,action,content=None):
+	
+	tables = C.DB_TABLE_LOGS
+	args = {"time":time,"ip":ip,"url":url,"action":action}
+	conn.cursor().execute('INSERT INTO {} {} VALUES (:time, :ip ,:url, :action)'.format(C.DB_NAME_LOGS,tables),args)
+
+	# 写入完整记录
+	if content and ( action == C.ACTION_LOG or action == C.ACTION_BLOCK):
+		last_insert_rowid = execute(conn,'select last_insert_rowid() from {}'.format(C.DB_NAME_LOGS))
+		log_id = last_insert_rowid.__next__()[0]
+
+		tables = C.DB_TABLE_FULL_LOG
+		args = {"log_id":log_id,"content":content}
+		conn.cursor().execute('INSERT INTO {} {} VALUES (:log_id, :content)'.format(C.DB_NAME_FULL_LOG,tables),args)
+	conn.commit()
+
+def get_rules(conn):
+	sql = "select * from {};".format(C.DB_NAME_RULES)
 	return execute(conn,sql)
 
 def add_rule(conn,action,content,description=''):
@@ -32,20 +48,20 @@ def delete_rule(conn,uid):
 	conn.execute(sql)
 	conn.commit()
 
-def add_log(conn,time,ip,url,action,content=None):
+def get_whitelists(conn):
+	sql = "select * from {};".format(C.DB_NAME_WHITELIST)
+	return execute(conn,sql)
 
-	tables = C.DB_TABLE_LOGS
-	args = {"time":time,"ip":ip,"url":url,"action":action}
-	conn.cursor().execute('INSERT INTO {} {} VALUES (:time, :ip ,:url, :action)'.format(C.DB_NAME_LOGS,tables),args)
+def add_whitelist(conn,url,ip):
+	tables = C.DB_TABLE_WHITELIST
+	# 防止注入
+	args = {"url":url,"ip":ip,}
+	conn.cursor().execute('INSERT INTO {} {} VALUES (:url, :ip)'.format(C.DB_NAME_WHITELIST,tables),args)
+	conn.commit()
 
-	# 写入完整记录
-	if content and ( action == C.ACTION_LOG or action == C.ACTION_BLOCK):
-		last_insert_rowid = execute(conn,'select last_insert_rowid() from {}'.format(C.DB_NAME_LOGS))
-		log_id = last_insert_rowid.__next__()[0]
-
-		tables = C.DB_TABLE_FULL_LOG
-		args = {"log_id":log_id,"content":content}
-		conn.cursor().execute('INSERT INTO {} {} VALUES (:log_id, :content)'.format(C.DB_NAME_FULL_LOG,tables),args)
+def delete_whitelist(conn,uid):
+	sql = 'DELETE FROM {} WHERE id={}'.format(C.DB_NAME_WHITELIST,uid)
+	conn.execute(sql)
 	conn.commit()
 
 def test():

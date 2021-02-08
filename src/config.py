@@ -9,10 +9,6 @@
 # 2 只输出2级红色warning信息
 DEBUG_LEVEL = 0
 
-# 是否使用Django前端的数据库
-# 根据数据库的不同，表名、列名也会有所不同
-USE_DJANGO_DB = True
-
 # 本地测试还是部署到服务器
 # 会改变代理的端口、主机等信息
 LOCAL_DEBUG = True
@@ -68,26 +64,16 @@ RULE_PATH = "../rules/"
 
 ################################################################
 # 数据库配置
-if USE_DJANGO_DB:
-	## Django 数据库位置
-	DATABASE_PATH = "../src_frontend/db.sqlite3"
-	## Django 数据库表名
-	DB_NAME_RULES = "waf_rule"
-	DB_NAME_LOGS = "waf_log"
-	DB_NAME_FULL_LOG = "waf_fulllog"
-	## Django 数据库表中字段名
-	DB_TABLE_RULES = "(action,content,description)"
-	DB_TABLE_LOGS = "(time,ip,url,action)"
-	DB_TABLE_FULL_LOG = "(log_id,content)"
-else:
-	## 自带测试数据库位置
-	DATABASE_PATH = "../db/data.db"
-	## 自带测试数据库表名
-	DB_NAME_RULES = "rules"
-	DB_NAME_LOGS = "log"
-	DB_NAME_FULL_LOG = "full_log"
-	## 自带测试数据库表中字段名
-	DB_TABLE_RULES = "(action,content,description)"
-	DB_TABLE_LOGS = "(time,ip,url,action)"
-	DB_TABLE_FULL_LOG = "(log_id,content)"
+## Django 数据库位置
+DATABASE_PATH = "../src_frontend/db.sqlite3"
+## Django 数据库表名
+DB_NAME_RULES = "waf_rule"
+DB_NAME_LOGS = "waf_log"
+DB_NAME_FULL_LOG = "waf_fulllog"
+DB_NAME_WHITELIST = "waf_whitelist"
+## Django 数据库表中字段名
+DB_TABLE_RULES = "(action,content,description)"
+DB_TABLE_LOGS = "(time,ip,url,action)"
+DB_TABLE_FULL_LOG = "(log_id,content)"
+DB_TABLE_WHITELIST = "(url,ip)"
 ################################################################
