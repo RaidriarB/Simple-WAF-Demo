@@ -45,8 +45,8 @@ def init_filter():
 '''
 def do_filter(client_req,compiled_rules):
 
-	client_req = rebuild_trunked_encoding(client_req)
-	
+	client_req = rebuild_chunked_encoding(client_req)
+
 	action = do_filter_rule_list(client_req,compiled_rules)
 	# TODO:
 	# 接下来还需要黑白名单判断
@@ -55,7 +55,7 @@ def do_filter(client_req,compiled_rules):
 '''
 还原TrunkedEncoding消息，防止bypass
 '''
-def rebuild_trunked_encoding(msg):
+def rebuild_chunked_encoding(msg):
 
 	if "transfer-encoding: chunked" not in msg.lower():
 		return msg
