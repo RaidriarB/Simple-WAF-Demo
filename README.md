@@ -1,7 +1,7 @@
 # WAF-Core
 文档待会再写。
 
-![整体架构](./pics/整体架构.png)
+![yUIymd.png](https://s3.ax1x.com/2021/02/08/yUIymd.png)
 
 一个基于python原生socket的简单云WAF项目，可以根据正则定义的规则进行流量过滤和日志记录，支持漏报误报设置，并具有Web管理端。
 
