@@ -60,7 +60,7 @@ python manage.py runserver
 然后在这个分支上本地开发、调试、提交，形成稳定版本。
 如果想把这个分支推送到远程（比如让其他人看看这个分支），使用`git push origin <your-branch-name>`
 
-需要与远程主分支合并时，首先要在主分支下`git pull`，若有冲突需要解决，然后进行分支合并`git merge -m "message" <your-branch-name>`
+需要与远程主分支合并时，首先要在主分支下`git pull`，若有冲突需要解决，然后进行分支合并`git merge --no-ff -m "message" <your-branch-name>`。建议这里禁用Fast Forward（即 --no-ff 选项）
 最后推送`git push origin main`
 
 ### 重要配置说明
