@@ -44,7 +44,7 @@ def do_response_pass(client_conn,client_req):
 			break
 
 		target_resp += buf
-		if not buf or buf.startswith(b'WebSocket') and buf.endswith(b'\r\n\r\n'):
+		if not buf:
 			break
 	
 	log("服务器回应：\n",1)
@@ -84,7 +84,7 @@ def do_response_log(client_conn,client_req):
 			break
 
 		target_resp += buf
-		if not buf or buf.startswith(b'WebSocket') and buf.endswith(b'\r\n\r\n'):
+		if not buf:
 			break
 	
 	log("服务器回应：\n",1)
