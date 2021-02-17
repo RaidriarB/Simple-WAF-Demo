@@ -16,3 +16,18 @@ class LogView(generic.ListView):
 
 class RuleView(generic.ListView):
     pass
+
+class FormView(generic.TemplateView):
+    template_name = 'waf/form.html'
+
+class ChartView(generic.TemplateView):
+    template_name = 'waf/chart.html'
+
+class EmptyView(generic.TemplateView):
+    template_name = 'waf/empty.html'
+
+class TabPanelView(generic.TemplateView):
+    template_name = 'waf/tab-panel.html'
+
+class UIElementsView(generic.TemplateView):
+    template_name = 'waf/ui-elements.html'
