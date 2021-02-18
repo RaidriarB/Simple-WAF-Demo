@@ -66,8 +66,7 @@ def rule_create(request):
 
 def log_detail(request,nid):
     logGet = Log.objects.filter(id=nid).first()
-    FulllogGet = Fulllog.objects.get(log = logGet)
-    print(FulllogGet)
+    FulllogGet = Fulllog.objects.filter(log = logGet).first()
     return render(request, 'waf/log_detail.html', {"log": logGet,'Fulllog':FulllogGet})
 
 def log_del(request,nid):  #删除
