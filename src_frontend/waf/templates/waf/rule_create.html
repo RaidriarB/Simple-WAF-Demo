@@ -1,4 +1,20 @@
-﻿{% extends 'base.html' %}
+{%extends 'base.html' %}
+
+    {% comment %} <div class="header">后台管理页面</div>
+    <div class="item">
+        <p><a href="/cmdb/detail/">用户信息</a></p>
+        <p><a >用户组</a></p>
+    </div>
+    <div class="content">
+        <h1 style="height: 100px">编辑用户</h1> {% endcomment %}
+
+        {% comment %} <form method="post" action="/cmdb/user_edit-{{ obj.id }}/">
+            <input type="text" name="content" value='{{ obj.content}}' >
+            <input type="action" name="action" value='{{ obj.action}}'>
+            <input type="submit" value="提交">
+        </form> {% endcomment %}
+
+    {% comment %} </div> {% endcomment %}
         {% block content %}
         <div id="page-wrapper" >
             <div id="page-inner">
@@ -25,21 +41,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for rule in rule_list %}
                                         <tr class="odd gradeX">
-                                            <td>{{rule.id}}</td>
-                                            <td>{{rule.content}}</td>
-                                            <td>{{rule.description}}</td>
-                                            <td class="center">{{rule.action}}</td>
-                                            <td>
-                                                <a class="content_item" href="/waf/rule_edit-{{ rule.id }}/" ><button>编辑</button></a>
-                    <a class="content_item" href="/waf/rule_del-{{ rule.id }}/"><button>删除</button></a>
-                                            </td>
-                                            {% endfor %}
+                                        <form method="post" action="/waf/rule_create">
+                                         {% csrf_token %}
+                                            <td>{{obj.id}}</td>
+                                            <td><input type="text" name="content" value='{{ obj.content}}' ></td>
+                                            <td><input type="description" name="description" value='{{ obj.description}}'> </td>
+                                            <td class="center"><input type="action" name="action" value='{{ obj.action}}'></td>
+                                            <td><input type="submit" value="提交"></td>
+                                        </form>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <a href='/waf/rule_create'><button>新建一个规则</button></a>
                             </div>
                             
                         </div>
