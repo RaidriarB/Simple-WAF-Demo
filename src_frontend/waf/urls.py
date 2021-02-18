@@ -10,5 +10,6 @@ urlpatterns = [
     path('ui-elements',views.UIElementsView.as_view(),name='ui-elements'),
     path('chart',views.ChartView.as_view(),name='chart'),
     path('empty',views.EmptyView.as_view(),name='empty'),
-    path('tab-panel',views.TabPanelView.as_view(),name='tab-panel')
+    path('tab-panel',views.TabPanelView.as_view(),name='tab-panel'),
+    path('rule',views.RuleView.as_view(),name= 'rule')
 ]

@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.views import generic
 
-from .models import Log
+from .models import Log,Rule
 
 
 class IndexView(generic.TemplateView):
@@ -15,7 +15,11 @@ class LogView(generic.ListView):
         return Log.objects.order_by('time')[:5]
 
 class RuleView(generic.ListView):
-    pass
+    template_name = 'waf/rule.html'
+    context_object_name = 'rule_list'
+
+    def get_queryset(self):
+        return Rule.objects.all()
 
 class FormView(generic.TemplateView):
     template_name = 'waf/form.html'
