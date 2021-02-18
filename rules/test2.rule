@@ -1,2 +1,0 @@
-LOG .*id=evil[0-9].*
-LOG .*id=.*evil.*
