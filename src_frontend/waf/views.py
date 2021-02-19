@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.views import generic
 
-from .models import Log,Rule,Fulllog
+from .models import Log,Rule,Fulllog,Whitelist
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.shortcuts import redirect
@@ -38,6 +38,12 @@ class TabPanelView(generic.TemplateView):
 class UIElementsView(generic.TemplateView):
     template_name = 'waf/ui-elements.html'
 
+class WhitelistView(generic.ListView):
+    template_name = 'waf/Whitelist.html'
+    context_object_name = 'Whitelist_list'
+
+    def get_queryset(self):
+        return Whitelist.objects.all()
 
 def rule_del(request,nid):  #删除
     Rule.objects.filter(id=nid).delete()
@@ -72,3 +78,26 @@ def log_detail(request,nid):
 def log_del(request,nid):  #删除
     Log.objects.filter(id=nid).delete()
     return redirect("log")
+
+def Whitelist_del(request,nid):  #删除
+    Whitelist.objects.filter(id=nid).delete()
+    return redirect("Whitelist")
+
+def Whitelist_edit(request,nid):  #修改
+    if request.method=="GET":
+        obj=Whitelist.objects.filter(id=nid).first()
+        return render(request, 'waf/Whitelist_edit.html', {"obj": obj})
+    elif request.method=="POST":      #拿到提交的数据
+        urlGet=request.POST.get("url")
+        ipGet = request.POST.get("ip")
+        Whitelist.objects.filter(id=nid).update(url = urlGet, ip = ipGet)
+        return redirect("Whitelist")
+
+def Whitelist_create(request):
+    if request.method=="GET":
+        return render(request, 'waf/Whitelist_create.html')
+    elif request.method=="POST":
+        urlGet=request.POST.get("url")
+        ipGet = request.POST.get("ip")
+        Whitelist.objects.create(url = urlGet, ip = ipGet)
+        return redirect("Whitelist")

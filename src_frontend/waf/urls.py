@@ -16,5 +16,9 @@ urlpatterns = [
     path('rule',views.RuleView.as_view(),name= 'rule'),
     re_path(r'^rule_del-(?P<nid>\d+)/', views.rule_del),
     re_path(r'^rule_edit-(?P<nid>\d+)/', views.rule_edit),
-    path('rule_create',views.rule_create)
+    path('rule_create',views.rule_create),
+    path('Whitelist',views.WhitelistView.as_view(),name= 'Whitelist'),
+    re_path(r'^Whitelist_del-(?P<nid>\d+)/', views.Whitelist_del),
+    re_path(r'^Whitelist_edit-(?P<nid>\d+)/', views.Whitelist_edit),
+    path('Whitelist_create',views.Whitelist_create)
 ]
