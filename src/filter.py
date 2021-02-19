@@ -180,8 +180,3 @@ def do_filter_whitelist(msg,ip,whitelists):
 			return C.ACTION_PASS
 	
 	return None
-
-
-def test():
-	init_whitelist()
-test()
