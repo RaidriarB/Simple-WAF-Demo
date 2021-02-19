@@ -13,7 +13,6 @@ def init_filter():
 
 	log("正在加载规则...",1)
 	compiled_rules = []
-	failed_rules = []
 
 	conn = dbutils.get_conn()
 	rules = dbutils.get_rules(conn)
@@ -39,17 +38,61 @@ def init_filter():
 	log("规则加载完毕。",1)
 	return compiled_rules
 
+def init_blacklist():
+	log("正在加载黑名单...",1)
+	blacklist = []
+
+	conn = dbutils.get_conn()
+	lists = dbutils.get_blacklists(conn)
+
+	for item in lists:
+		try:
+			uid,url,ip = item
+			listitem = (url,ip)
+			blacklist.append(listitem)
+		except:
+			log("加载出错，出错的条目为",2)
+			log(str(item),2)
+				
+	return blacklist
+
+def init_whitelist():
+	log("正在加载白名单...",1)
+	whitelist = []
+
+	conn = dbutils.get_conn()
+	lists = dbutils.get_whitelists(conn)
+
+	for item in lists:
+		try:
+			uid,url,ip = item
+			listitem = (url,ip)
+			whitelist.append(listitem)
+		except:
+			log("加载出错，出错的条目为",2)
+			log(str(item),2)
+	return whitelist
+	
 '''
 判断请求，返回动作代码
 其中分为很多部分
 '''
-def do_filter(client_req,compiled_rules):
+def do_filter(client_req,compiled_rules,blacklists,whitelists):
+
+	action = None
 
 	client_req = rebuild_chunked_encoding(client_req)
 
+	action = do_filter_blacklist(client_req,blacklists)
+	if action is not None:
+		return action
+
+	action = do_filter_whitelist(client_req,whitelists)
+	if action is not None:
+		return action
+
 	action = do_filter_rule_list(client_req,compiled_rules)
-	# TODO:
-	# 接下来还需要黑白名单判断
+
 	return action
 
 '''
@@ -102,18 +145,18 @@ def do_filter_rule_list(msg,compiled_rules):
 '''
 从黑名单匹配
 '''
-def do_filter_blacklist():
-	# TODO
+def do_filter_blacklist(msg,blacklists):
 	pass
+
 
 '''
 从白名单匹配
 '''
-def do_filter_whitelist():
+def do_filter_whitelist(msg,whitelists):
 	# TODO
 	pass
 
 
 def test():
-	rebuild_trunked_encoding("header1\ntransfer-encoding: chunked\nheadern\n\n2;18f9*ja\n1' o\n6;f1dfsdv\nr 1=1")
+	init_whitelist()
 test()

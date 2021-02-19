@@ -2,7 +2,7 @@ import socket,sqlite3
 
 from threading import Thread,Lock
 
-from filter import do_filter,init_filter
+from filter import do_filter,init_filter,init_blacklist,init_whitelist
 from response import do_response
 from log import do_log
 import config as C
@@ -15,6 +15,8 @@ proxy_conn_pool = []
 # 全局变量，编译好的规则列表
 # 规则热更新通过修改该变量的引用
 compiled_rules = None
+blacklists = None
+whitelists = None
 
 # 全局变量，数据库连接
 db_conn = None
@@ -28,6 +30,8 @@ lock = Lock()
 def handle_socket(client_conn):
 
 	global compiled_rules
+	global blacklists
+	global whitelists
 
 	BUF_SIZE = 2048 # 缓冲区大小
 	client_req = ''
@@ -50,7 +54,10 @@ def handle_socket(client_conn):
 		log("出现空请求，丢弃",1)
 		return
 
-	action = do_filter(client_req,compiled_rules)
+	ip = client_conn.getpeername()[0]
+	log("请求ip:"+ip,1)
+
+	action = do_filter(client_req,compiled_rules,blacklists,whitelists)
 	do_response(client_conn,client_req,action)
 	log("-----------请求处理完毕。---------",1)
 
@@ -61,6 +68,8 @@ def handle_controller():
 
 	log("已经开启控制连接",1)
 	global compiled_rules
+	global blacklists
+	global whitelists
 	
 	# 初始化 server socket
 	controller_server_socket = socket.socket()
@@ -111,10 +120,17 @@ def handle_ctlmsg(conn):
 
 		# 我总觉得这里需要try一下
 		temp_compiled_rules = init_filter()
+		temp_blacklists = init_blacklist()
+		temp_whitelists = init_whitelist()
 		# 加锁处理
 		lock.acquire(True)
+
 		compiled_rules = temp_compiled_rules
+		blacklists = temp_blacklists
+		whitelists = temp_whitelists
+
 		lock.release()
+		
 		conn.sendall("FINISHED".encode())
 		conn.close()
 		log("完成规则更新",1)
@@ -137,7 +153,12 @@ def proxy_main_loop():
 
 	# 初始化规则
 	global compiled_rules
+	global blacklists
+	global whitelists
+
 	compiled_rules = init_filter()
+	blacklists = init_blacklist()
+	whitelists = init_whitelist()
 
 	# 初始化 serversocket
 	proxy_server_socket = socket.socket()

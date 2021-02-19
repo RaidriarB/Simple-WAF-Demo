@@ -25,3 +25,9 @@ class Whitelist(models.Model):
 	id = models.AutoField('id', primary_key=True, unique=True)
 	url = models.TextField(default='',blank=False)
 	ip = models.TextField(default='',blank=False)
+
+class Blacklist(models.Model):
+	# 使用*作为通配
+	id = models.AutoField('id', primary_key=True, unique=True)
+	url = models.TextField(default='',blank=False)
+	ip = models.TextField(default='',blank=False)

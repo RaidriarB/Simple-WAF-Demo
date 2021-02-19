@@ -71,9 +71,11 @@ DB_NAME_RULES = "waf_rule"
 DB_NAME_LOGS = "waf_log"
 DB_NAME_FULL_LOG = "waf_fulllog"
 DB_NAME_WHITELIST = "waf_whitelist"
+DB_NAME_BLACKLIST = "waf_blacklist"
 ## Django 数据库表中字段名
 DB_TABLE_RULES = "(action,content,description)"
 DB_TABLE_LOGS = "(time,ip,url,action)"
 DB_TABLE_FULL_LOG = "(log_id,content)"
 DB_TABLE_WHITELIST = "(url,ip)"
+DB_TABLE_BLACKLIST = "(url,ip)"
 ################################################################

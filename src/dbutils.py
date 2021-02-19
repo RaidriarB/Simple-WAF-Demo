@@ -64,6 +64,22 @@ def delete_whitelist(conn,uid):
 	conn.execute(sql)
 	conn.commit()
 
+def get_blacklists(conn):
+	sql = "select * from {};".format(C.DB_NAME_BLACKLIST)
+	return execute(conn,sql)
+
+def add_blacklist(conn,url,ip):
+	tables = C.DB_TABLE_WHITELIST
+	# 防止注入
+	args = {"url":url,"ip":ip,}
+	conn.cursor().execute('INSERT INTO {} {} VALUES (:url, :ip)'.format(C.DB_NAME_BLACKLIST,tables),args)
+	conn.commit()
+
+def delete_blacklist(conn,uid):
+	sql = 'DELETE FROM {} WHERE id={}'.format(C.DB_NAME_BLACKLIST,uid)
+	conn.execute(sql)
+	conn.commit()
+
 def test():
 	c = get_conn()
 	# add_log(c,"2021-02-27","127.0.0.1","/src?id=123","PASS")
