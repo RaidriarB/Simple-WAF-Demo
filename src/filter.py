@@ -77,17 +77,17 @@ def init_whitelist():
 判断请求，返回动作代码
 其中分为很多部分
 '''
-def do_filter(client_req,compiled_rules,blacklists,whitelists):
+def do_filter(client_req,ip,compiled_rules,blacklists,whitelists):
 
 	action = None
 
 	client_req = rebuild_chunked_encoding(client_req)
 
-	action = do_filter_blacklist(client_req,blacklists)
+	action = do_filter_blacklist(client_req,ip,blacklists)
 	if action is not None:
 		return action
 
-	action = do_filter_whitelist(client_req,whitelists)
+	action = do_filter_whitelist(client_req,ip,whitelists)
 	if action is not None:
 		return action
 
@@ -96,7 +96,7 @@ def do_filter(client_req,compiled_rules,blacklists,whitelists):
 	return action
 
 '''
-还原TrunkedEncoding消息，防止bypass
+还原ChunkedEncoding消息，防止bypass
 '''
 def rebuild_chunked_encoding(msg):
 
@@ -145,16 +145,41 @@ def do_filter_rule_list(msg,compiled_rules):
 '''
 从黑名单匹配
 '''
-def do_filter_blacklist(msg,blacklists):
-	pass
+def do_filter_blacklist(msg,ip,blacklists):
+
+	log("根据黑名单判断")
+
+	line = msg.split('\n')[0]
+	url = line.split(" ")[1]
+
+	log("ip:{},url:{}".format(ip,url))
+
+	for item in blacklists:
+		if (url.startswith(item[0]) or item[0] == "*") and (ip == item[1] or item[1] == "*"):
+			log("在黑名单里")
+			return C.ACTION_BLOCK
+	
+	return None
 
 
 '''
 从白名单匹配
 '''
-def do_filter_whitelist(msg,whitelists):
-	# TODO
-	pass
+def do_filter_whitelist(msg,ip,whitelists):
+
+	log("根据白名单判断")
+
+	line = msg.split('\n')[0]
+	url = line.split(" ")[1]
+
+	log("ip:{},url:{}".format(ip,url))
+
+	for item in whitelists:
+		if (url.startswith(item[0]) or item[0] == "*") and (ip == item[1] or item[1] == "*"):
+			log("在白名单里",1)
+			return C.ACTION_PASS
+	
+	return None
 
 
 def test():

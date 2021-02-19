@@ -57,7 +57,7 @@ def handle_socket(client_conn):
 	ip = client_conn.getpeername()[0]
 	log("请求ip:"+ip,1)
 
-	action = do_filter(client_req,compiled_rules,blacklists,whitelists)
+	action = do_filter(client_req,ip,compiled_rules,blacklists,whitelists)
 	do_response(client_conn,client_req,action)
 	log("-----------请求处理完毕。---------",1)
 
