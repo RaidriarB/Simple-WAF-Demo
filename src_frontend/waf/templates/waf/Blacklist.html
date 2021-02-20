@@ -1,49 +1,57 @@
 ﻿{% extends 'base.html' %}
-        {% block content %}
-        <div id="page-wrapper" >
-            <div id="page-inner">
-			 <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-header">
-                            黑名单管理页 <small>Create new page.</small>
-                        </h1>
+{% block content %}
+    <div id="page-wrapper">
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        黑名单管理页 <small>Create new page.</small>
+                    </h1>
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             黑名单查看
+                            黑名单查看
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
-                                        <tr>
-                                            <th>规则id</th>
-                                            <th>内容</th>
-                                            <th>描述</th>
-                                            <th>操作</th>
-                                        </tr>
+                                    <tr>
+                                        <th>规则id</th>
+                                        <th>内容</th>
+                                        <th>描述</th>
+                                        <th>操作</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        {% for Blacklist in Blacklist_list %}
+                                    {% for Blacklist in Blacklist_list %}
                                         <tr class="odd gradeX">
-                                            <td>{{Blacklist.id}}</td>
-                                            <td>{{Blacklist.url}}</td>
-                                            <td>{{Blacklist.ip}}</td>
-                                            <td>
-                                                <a class="content_item" href="/waf/Blacklist_edit-{{ Blacklist.id }}/" ><button>编辑</button></a>
-                    <a class="content_item" href="/waf/Blacklist_del-{{ Blacklist.id }}/"><button>删除</button></a>
-                                            </td>
-                                            {% endfor %}
-                                        </tr>
+                                        <td>{{ Blacklist.id }}</td>
+                                        <td>{{ Blacklist.url }}</td>
+                                        <td>{{ Blacklist.ip }}</td>
+                                        <td>
+                                            <a class="content_item" href="/waf/Blacklist_edit-{{ Blacklist.id }}/">
+                                                <button>编辑</button>
+                                            </a>
+                                            <a class="content_item" href="/waf/Blacklist_del-{{ Blacklist.id }}/">
+                                                <button>删除</button>
+                                            </a>
+                                        </td>
+                                    {% endfor %}
+                                    </tr>
                                     </tbody>
                                 </table>
-                                <a href='/waf/Blacklist_create'><button>新建一个规则</button></a>
+                                <a href='/waf/Blacklist_create'>
+                                    <button>新建一个规则</button>
+                                </a>
                             </div>
-                            
+
                         </div>
                     </div>
                     <!--End Advanced Tables -->
                 </div>
             </div>
-            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
                  
