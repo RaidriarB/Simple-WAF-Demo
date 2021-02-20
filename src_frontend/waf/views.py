@@ -1,7 +1,7 @@
-from django.http import HttpResponse
+﻿from django.http import HttpResponse
 from django.views import generic
 
-from .models import Log,Rule,Fulllog,Whitelist
+from .models import Log,Rule,Fulllog,Whitelist,Blacklist
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.shortcuts import redirect
@@ -45,6 +45,13 @@ class WhitelistView(generic.ListView):
     def get_queryset(self):
         return Whitelist.objects.all()
 
+class BlacklistView(generic.ListView):
+    template_name = 'waf/Blacklist.html'
+    context_object_name = 'Blacklist_list'
+
+    def get_queryset(self):
+        return Blacklist.objects.all()
+
 def rule_del(request,nid):  #删除
     Rule.objects.filter(id=nid).delete()
     return redirect("rule")
@@ -78,7 +85,7 @@ def log_detail(request,nid):
 def log_del(request,nid):  #删除
     Log.objects.filter(id=nid).delete()
     return redirect("log")
-
+#Whitelist
 def Whitelist_del(request,nid):  #删除
     Whitelist.objects.filter(id=nid).delete()
     return redirect("Whitelist")
@@ -101,3 +108,26 @@ def Whitelist_create(request):
         ipGet = request.POST.get("ip")
         Whitelist.objects.create(url = urlGet, ip = ipGet)
         return redirect("Whitelist")
+#Blacklist
+def Blacklist_del(request,nid):  #删除
+    Blacklist.objects.filter(id=nid).delete()
+    return redirect("Blacklist")
+
+def Blacklist_edit(request,nid):  #修改
+    if request.method=="GET":
+        obj=Blacklist.objects.filter(id=nid).first()
+        return render(request, 'waf/Blacklist_edit.html', {"obj": obj})
+    elif request.method=="POST":      #拿到提交的数据
+        urlGet=request.POST.get("url")
+        ipGet = request.POST.get("ip")
+        Blacklist.objects.filter(id=nid).update(url = urlGet, ip = ipGet)
+        return redirect("Blacklist")
+
+def Blacklist_create(request):
+    if request.method=="GET":
+        return render(request, 'waf/Blacklist_create.html')
+    elif request.method=="POST":
+        urlGet=request.POST.get("url")
+        ipGet = request.POST.get("ip")
+        Blacklist.objects.create(url = urlGet, ip = ipGet)
+        return redirect("Blacklist")
