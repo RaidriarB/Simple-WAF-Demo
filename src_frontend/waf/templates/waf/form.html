@@ -1,17 +1,17 @@
 ﻿{% extends 'base.html' %}
 {% load static %}
 {% block content %}
-        <div id="page-wrapper" >
-            <div id="page-inner">
-			 <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-header">
-                            Forms Page <small>Best form elements.</small>
-                        </h1>
-                    </div>
-                </div> 
-                 <!-- /. ROW  -->
-              <div class="row">
+    <div id="page-wrapper">
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        Forms Page <small>Best form elements.</small>
+                    </h1>
+                </div>
+            </div>
+            <!-- /. ROW  -->
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -76,30 +76,36 @@
                                             <label>Radio Buttons</label>
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">Radio 1
+                                                    <input type="radio" name="optionsRadios" id="optionsRadios1"
+                                                           value="option1" checked="">Radio 1
                                                 </label>
                                             </div>
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Radio 2
+                                                    <input type="radio" name="optionsRadios" id="optionsRadios2"
+                                                           value="option2">Radio 2
                                                 </label>
                                             </div>
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">Radio 3
+                                                    <input type="radio" name="optionsRadios" id="optionsRadios3"
+                                                           value="option3">Radio 3
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Inline Radio Buttons</label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked="">1
+                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1"
+                                                       value="option1" checked="">1
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2">2
+                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2"
+                                                       value="option2">2
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3">3
+                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3"
+                                                       value="option3">3
                                             </label>
                                         </div>
                                         <div class="form-group">
@@ -133,7 +139,8 @@
                                         <fieldset disabled="">
                                             <div class="form-group">
                                                 <label for="disabledSelect">Disabled input</label>
-                                                <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" disabled="">
+                                                <input class="form-control" id="disabledInput" type="text"
+                                                       placeholder="Disabled input" disabled="">
                                             </div>
                                             <div class="form-group">
                                                 <label for="disabledSelect">Disabled select menu</label>
@@ -187,7 +194,8 @@
                                         <div class="form-group input-group">
                                             <input type="text" class="form-control">
                                             <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+                                                <button class="btn btn-default" type="button"><i
+                                                        class="fa fa-search"></i>
                                                 </button>
                                             </span>
                                         </div>
@@ -203,20 +211,22 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-			<footer><p>Copyright &copy; 2016.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p></footer>
-			</div>
-             <!-- /. PAGE INNER  -->
-            </div>
-         <!-- /. PAGE WRAPPER  -->
+            <footer><p>Copyright &copy; 2016.Company name All rights reserved.<a target="_blank"
+                                                                                 href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+            </p></footer>
         </div>
-     <!-- /. WRAPPER  -->
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
     <!-- JS Scripts-->
     <!-- jQuery Js -->
     <script src="{% static 'waf/js/jquery-1.10.2.js' %}"></script>
-      <!-- Bootstrap Js -->
+    <!-- Bootstrap Js -->
     <script src="{% static 'waf/js/bootstrap.min.js' %}"></script>
     <!-- Metis Menu Js -->
     <script src="{% static 'waf/js/jquery.metisMenu.js' %}"></script>
-      <!-- Custom Js -->
+    <!-- Custom Js -->
     <script src="{% static 'waf/js/custom-scripts.js' %}"></script>
 {% endblock %}

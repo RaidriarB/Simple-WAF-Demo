@@ -1,122 +1,126 @@
 ﻿{% extends 'base.html' %}
 {% load static %}
 {% block content %}
-        <div id="page-wrapper">
-            <div id="page-inner">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-header">
-                            总览<small>Summary of your App</small>
-                        </h1>
+    <div id="page-wrapper">
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        总览<small>Summary of your App</small>
+                    </h1>
 
-                    </div>
                 </div>
-				
-				
-                <!-- /. ROW  -->
+            </div>
 
-                <div class="row">
-                    <div class="col-md-3 col-sm-12 col-xs-12">
-                        <div class="panel panel-primary text-center no-boder bg-color-green green">
-                            <div class="panel-left pull-left green">
-                                <i class="fa fa-eye fa-5x"></i>
-                                
-                            </div>
-                            <div class="panel-right">
-								<h3>8,457</h3>
-                               <strong>流量总数</strong>
-                            </div>
+
+            <!-- /. ROW  -->
+
+            <div class="row">
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-green green">
+                        <div class="panel-left pull-left green">
+                            <i class="fa fa-eye fa-5x"></i>
+
                         </div>
-                    </div>
-                    <div class="col-md-3 col-sm-12 col-xs-12">
-                        <div class="panel panel-primary text-center no-boder bg-color-blue">
-                              <div class="panel-left pull-left blue">
-                                <i class="fa fa-shopping-cart fa-5x"></i>
-								</div>
-                                
-                            <div class="panel-right">
-							<h3>52,160 </h3>
-                               <strong>规则总数</strong>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-12 col-xs-12">
-                        <div class="panel panel-primary text-center no-boder bg-color-red">
-                            <div class="panel-left pull-left red">
-                                <i class="fa fa fa-comments fa-5x"></i>
-                               
-                            </div>
-                            <div class="panel-right">
-							 <h3>15,823 </h3>
-                               <strong> Comments </strong>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-12 col-xs-12">
-                        <div class="panel panel-primary text-center no-boder bg-color-brown">
-                            <div class="panel-left pull-left brown">
-                                <i class="fa fa-users fa-5x"></i>
-                                
-                            </div>
-                            <div class="panel-right">
-							<h3>36,752 </h3>
-                             <strong>No. of Visits</strong>
-
-                            </div>
+                        <div class="panel-right">
+                            <h3>8,457</h3>
+                            <strong>流量总数</strong>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-blue">
+                        <div class="panel-left pull-left blue">
+                            <i class="fa fa-shopping-cart fa-5x"></i>
+                        </div>
 
-		<div class="row">
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>可疑流量(LOG)</h4>
-						<div class="easypiechart" id="easypiechart-orange" data-percent="55" ><span class="percent">55%</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>正常流量(PASS)</h4>
-						<div class="easypiechart" id="easypiechart-teal" data-percent="84" ><span class="percent">84%</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>恶意流量(BLOCK)</h4>
-						<div class="easypiechart" id="easypiechart-red" data-percent="46" ><span class="percent">46%</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/.row-->
+                        <div class="panel-right">
+                            <h3>52,160 </h3>
+                            <strong>规则总数</strong>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-red">
+                        <div class="panel-left pull-left red">
+                            <i class="fa fa fa-comments fa-5x"></i>
+
+                        </div>
+                        <div class="panel-right">
+                            <h3>15,823 </h3>
+                            <strong> Comments </strong>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-brown">
+                        <div class="panel-left pull-left brown">
+                            <i class="fa fa-users fa-5x"></i>
+
+                        </div>
+                        <div class="panel-right">
+                            <h3>36,752 </h3>
+                            <strong>No. of Visits</strong>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body easypiechart-panel">
+                            <h4>可疑流量(LOG)</h4>
+                            <div class="easypiechart" id="easypiechart-orange" data-percent="55"><span class="percent">55%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body easypiechart-panel">
+                            <h4>正常流量(PASS)</h4>
+                            <div class="easypiechart" id="easypiechart-teal" data-percent="84"><span
+                                    class="percent">84%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body easypiechart-panel">
+                            <h4>恶意流量(BLOCK)</h4>
+                            <div class="easypiechart" id="easypiechart-red" data-percent="46"><span
+                                    class="percent">46%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/.row-->
+        </div>
+    </div>
     <!-- /. WRAPPER  -->
     <!-- JS Scripts-->
     <!-- jQuery Js -->
     <script src="{% static 'waf/js/jquery-1.10.2.js' %}"></script>
     <!-- Bootstrap Js -->
     <script src="{% static 'waf/js/bootstrap.min.js' %}"></script>
-	 
+
     <!-- Metis Menu Js -->
     <script src="{% static 'waf/js/jquery.metisMenu.js' %}"></script>
     <!-- Morris Chart Js -->
     <script src="{% static 'waf/js/morris/raphael-2.1.0.min.js' %}"></script>
     <script src="{% static 'waf/js/morris/morris.js' %}"></script>
-	
-	
-	<script src="{% static 'waf/js/easypiechart.js' %}"></script>
-	<script src="{% static 'waf/js/easypiechart-data.js' %}"></script>
-	
-	 <script src="{% static 'waf/js/Lightweight-Chart/jquery.chart.js' %}"></script>
-	
+
+
+    <script src="{% static 'waf/js/easypiechart.js' %}"></script>
+    <script src="{% static 'waf/js/easypiechart-data.js' %}"></script>
+
+    <script src="{% static 'waf/js/Lightweight-Chart/jquery.chart.js' %}"></script>
+
     <!-- Custom Js -->
     <script src="{% static 'waf/js/custom-scripts.js' %}"></script>
- {% endblock %}
+{% endblock %}
