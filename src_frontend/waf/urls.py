@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     path('',views.EmptyView.as_view(),name='empty'),
 	# path('index',views.IndexView.as_view(),name='index'),
-    path('log',views.LogView.as_view(),name='log'),
+    path('log',views.Log_index,name='log'),
     re_path(r'^log_del-(?P<nid>\d+)/', views.log_del),
     re_path(r'^log_detail-(?P<nid>\d+)/', views.log_detail),
     # path('table',views.LogView.as_view(),name='rule'),
