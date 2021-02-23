@@ -16,10 +16,6 @@ python3 -m pip install -r requirements.txt
 ./start.sh
 ```
 
-
-
-
-
 ## 项目结构简介
 
 main.py为入口，编写了代理核心循环和控制连接。在控制连接中，程序监听socket控制端口获取控制信息，进行热更新操作；在核心循环中，程序调用请求的解析与匹配（filter.py）、请求的处理动作（response.py、log.py）。
