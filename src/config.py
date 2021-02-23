@@ -11,7 +11,7 @@ DEBUG_LEVEL = 0
 
 # 本地测试还是部署到服务器
 # 会改变代理的端口、主机等信息
-LOCAL_DEBUG = False
+LOCAL_DEBUG = True
 
 # 控制连接的监听端口
 CONTROLLER_PORT = 12345
