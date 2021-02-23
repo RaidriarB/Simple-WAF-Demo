@@ -41,7 +41,7 @@
                                     </thead>
                                     <tbody>
                                     <tr class="odd gradeX">
-                                        <form method="post" action="/waf/Blacklist_edit-{{ obj.id }}/">
+                                        <form method="post" action="/Blacklist_edit-{{ obj.id }}/">
                                             {% csrf_token %}
                                             <td>{{ obj.id }}</td>
                                             <td><input type="text" name="url" value='{{ obj.url }}'></td>

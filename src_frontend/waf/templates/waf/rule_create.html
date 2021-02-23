@@ -42,7 +42,7 @@
                             </thead>
                             <tbody>
                             <tr class="odd gradeX">
-                                <form method="post" action="/waf/rule_create">
+                                <form method="post" action="/rule_create">
                                     {% csrf_token %}
                                     <td>{{ obj.id }}</td>
                                     <td><input type="text" name="content" value='{{ obj.content }}'></td>

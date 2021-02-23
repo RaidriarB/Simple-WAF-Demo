@@ -1,6 +1,7 @@
 import socket,sqlite3
 
 from threading import Thread,Lock
+from importlib import reload
 
 from filter import do_filter,init_filter,init_blacklist,init_whitelist
 from response import do_response
@@ -122,17 +123,17 @@ def handle_ctlmsg(conn):
 		temp_compiled_rules = init_filter()
 		temp_blacklists = init_blacklist()
 		temp_whitelists = init_whitelist()
+
 		# 加锁处理
 		lock.acquire(True)
-
 		compiled_rules = temp_compiled_rules
 		blacklists = temp_blacklists
 		whitelists = temp_whitelists
-
 		lock.release()
 		
 		conn.sendall("FINISHED".encode())
 		conn.close()
+		# reload()
 		log("完成规则更新",1)
 	elif msg == C.CONTROL_CONFIRM:
 		conn.sendall(C.CONTROL_CONFIRM.encode())

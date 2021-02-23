@@ -3,7 +3,7 @@
 '''
 
 import config as C
-
+from filter import init_filter,init_blacklist,init_whitelist
 '''
 一个日志输出工具，可以指定级别。
 0:正常白色输出 1:debug级别绿色 2:warning级别红色
@@ -32,30 +32,10 @@ def log(message,level=0,):
 	# 还原颜色
 	print("\033[0m",end='')
 
-# 修改文件中某一行
-# 没啥用
-def edit_line(file,lineno,newline):
-	# 删除文件第n行
-	import os
-	cur_line = 0
-	try:
-		newfile = file+'.bak'
-		with open(newfile,'w+')as f:
-			for k in open(file,'r'):
-				cur_line += 1
-				if cur_line == lineno:
-					f.write(newline+'\n')
-				else:
-					f.write(k)
-		os.remove(file)
-		os.rename(newfile,file)	
-		return True
-	except:
-		# 失败，回滚
-		os.remove(newfile)
-		return False
+compiled_rules = None
+blacklists = None
+whitelists = None
 
-# 删除文件中某一行
-# 也没啥用
-def delete_line(file,lineno):
-	return edit_line(file,lineno,'')
+compiled_rules = init_filter()
+blacklists = init_blacklist()
+whitelists = init_whitelist()

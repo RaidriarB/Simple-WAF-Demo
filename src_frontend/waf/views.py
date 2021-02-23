@@ -30,24 +30,22 @@ def index(request):
 
     rulesum = Rule.objects.all().aggregate(Count('id'))['id__count']
     flowsum = Log.objects.all().aggregate(Count('id'))['id__count']
+
     psum = Log.objects.filter(action='PASS').aggregate(Count('id'))['id__count']
     bsum = Log.objects.filter(action='BLOCK').aggregate(Count('id'))['id__count']
     lsum = Log.objects.filter(action='LOG').aggregate(Count('id'))['id__count']
 
-    passrate = round(psum*100 / flowsum , 2)
-    blockrate = round(bsum*100 / flowsum , 2)
-    lograte = round(lsum*100 / flowsum , 2)
+    if flowsum == 0:
+        passrate,blockrate,lograte = 0,0,0
+    else:
+        passrate = round(psum*100 / flowsum , 2)
+        blockrate = round(bsum*100 / flowsum , 2)
+        lograte = round(lsum*100 / flowsum , 2)
     print(rulesum,flowsum,psum,bsum,lsum)
 
     params = {"rulesum":rulesum,"flowsum":flowsum,"passrate":passrate,"blockrate":blockrate,"lograte":lograte}
 
     return render(request, 'waf/index.html', params)
-
-
-class IndexView(generic.TemplateView):
-    context_object_name = 'index_list'
-    template_name = 'waf/index.html'
-    # TODO
 
 class WhitelistView(generic.ListView):
     template_name = 'waf/Whitelist.html'
