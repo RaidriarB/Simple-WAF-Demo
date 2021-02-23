@@ -3,21 +3,17 @@ import socket,sqlite3
 from threading import Thread,Lock
 from importlib import reload
 
-from filter import do_filter,init_filter,init_blacklist,init_whitelist
+from filter import do_filter
 from response import do_response
 from log import do_log
 import config as C
 from utils import log
 
+import common
+
 # 全局变量，代理主socket和连接池
 proxy_server_socket = None
 proxy_conn_pool = []
-
-# 全局变量，编译好的规则列表
-# 规则热更新通过修改该变量的引用
-compiled_rules = None
-blacklists = None
-whitelists = None
 
 # 全局变量，数据库连接
 db_conn = None
@@ -29,10 +25,6 @@ lock = Lock()
 处理请求
 '''
 def handle_socket(client_conn):
-
-	global compiled_rules
-	global blacklists
-	global whitelists
 
 	BUF_SIZE = 2048 # 缓冲区大小
 	client_req = ''
@@ -58,7 +50,7 @@ def handle_socket(client_conn):
 	ip = client_conn.getpeername()[0]
 	log("请求ip:"+ip,1)
 
-	action = do_filter(client_req,ip,compiled_rules,blacklists,whitelists)
+	action = do_filter(client_req,ip,common.compiled_rules,common.blacklists,common.whitelists)
 	do_response(client_conn,client_req,action)
 	log("-----------请求处理完毕。---------",1)
 
@@ -68,10 +60,7 @@ WAF核心模块控制连接，用于异步更新、确认存活等
 def handle_controller():
 
 	log("已经开启控制连接",1)
-	global compiled_rules
-	global blacklists
-	global whitelists
-	
+
 	# 初始化 server socket
 	controller_server_socket = socket.socket()
 	controller_server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -119,21 +108,11 @@ def handle_ctlmsg(conn):
 
 	if msg == C.CONTROL_UPDATE:
 
-		# 我总觉得这里需要try一下
-		temp_compiled_rules = init_filter()
-		temp_blacklists = init_blacklist()
-		temp_whitelists = init_whitelist()
+		import common
+		reload(common)
 
-		# 加锁处理
-		lock.acquire(True)
-		compiled_rules = temp_compiled_rules
-		blacklists = temp_blacklists
-		whitelists = temp_whitelists
-		lock.release()
-		
 		conn.sendall("FINISHED".encode())
 		conn.close()
-		# reload()
 		log("完成规则更新",1)
 	elif msg == C.CONTROL_CONFIRM:
 		conn.sendall(C.CONTROL_CONFIRM.encode())
@@ -151,15 +130,6 @@ def handle_ctlmsg(conn):
 TODO:与管理端的交互，热更新规则
 '''
 def proxy_main_loop():
-
-	# 初始化规则
-	global compiled_rules
-	global blacklists
-	global whitelists
-
-	compiled_rules = init_filter()
-	blacklists = init_blacklist()
-	whitelists = init_whitelist()
 
 	# 初始化 serversocket
 	proxy_server_socket = socket.socket()

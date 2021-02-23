@@ -79,6 +79,7 @@ def init_whitelist():
 '''
 def do_filter(client_req,ip,compiled_rules,blacklists,whitelists):
 
+
 	action = None
 
 	client_req = rebuild_chunked_encoding(client_req)

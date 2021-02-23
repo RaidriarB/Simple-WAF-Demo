@@ -3,7 +3,8 @@
 '''
 
 import config as C
-from filter import init_filter,init_blacklist,init_whitelist
+
+
 '''
 一个日志输出工具，可以指定级别。
 0:正常白色输出 1:debug级别绿色 2:warning级别红色
@@ -31,11 +32,3 @@ def log(message,level=0,):
 
 	# 还原颜色
 	print("\033[0m",end='')
-
-compiled_rules = None
-blacklists = None
-whitelists = None
-
-compiled_rules = init_filter()
-blacklists = init_blacklist()
-whitelists = init_whitelist()
