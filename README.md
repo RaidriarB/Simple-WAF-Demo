@@ -6,6 +6,18 @@
 
 所有的配置都写在`src/config.py`中
 
+## 部署到远程
+
+
+
+## 项目结构简介
+
+main.py为入口，编写了代理核心循环和控制连接。在控制连接中，程序监听socket控制端口获取控制信息，进行热更新操作；在核心循环中，程序调用请求的解析与匹配（filter.py）、请求的处理动作（response.py、log.py）。
+
+filter.py中包含解析与匹配的逻辑。解析部分进行了编码还原工作；匹配部分进行了规则匹配、黑白名单匹配等工作。response.py中，根据不同的action（PASS、BLOCK、LOG）决定不同的动作，封装在不同函数中，其中调用了日志记录模块log.py。
+
+剩下的文件中，config.py中记录了项目的一系列全局参数；utils.py中包含了一个可以根据不同级别输出信息的log工具；dbutils用于操作数据库，common.py包含了三个全局变量，用于热更新。
+
 ## 开发人员合作
 
 如果没有更改`src/config.py`，访问`127.0.0.1:9999`为代理，`127.0.0.1:12345`是控制连接，`127.0.0.1:8000`是Django的测试服务器。
@@ -26,7 +38,6 @@ cd Simple-WAF-Demo
 ```
 # 首次创建虚拟环境，需要执行下面两条
 python3 -m venv .venv
-pip install -r requirements.txt
 
 
 # 使用虚拟环境的话，每新打开一个shell都要输入下面命令
@@ -34,6 +45,9 @@ pip install -r requirements.txt
 source .venv/bin/activate
 # Windows下
 .venv/bin/activate.bat
+
+# 安装依赖
+pip install -r requirements.txt
 ```
 
 接下来就可以启动项目了。
@@ -81,14 +95,6 @@ LOCAL_DEBUG = True
 # 控制连接的监听端口
 CONTROLLER_PORT = 12345
 ```
-
-### 项目结构简介
-
-main.py为入口，编写了代理核心循环和控制连接。在控制连接中，程序监听socket控制端口获取控制信息，进行热更新操作；在核心循环中，程序调用请求的解析与匹配（filter.py）、请求的处理动作（response.py、log.py）。
-
-filter.py中包含解析与匹配的逻辑。解析部分进行了编码还原工作；匹配部分进行了规则匹配、黑白名单匹配等工作。response.py中，根据不同的action（PASS、BLOCK、LOG）决定不同的动作，封装在不同函数中，其中调用了日志记录模块log.py。
-
-剩下的文件中，config.py中记录了项目的一系列全局参数；utils.py中包含了一个可以根据不同级别输出信息的log工具；dbutils用于操作数据库。
 
 ### 快速测试控制连接
 
