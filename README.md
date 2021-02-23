@@ -1,5 +1,4 @@
 # WAF-Core
-文档待会再写。
 
 ![yUIymd.png](https://s3.ax1x.com/2021/02/08/yUIymd.png)
 
