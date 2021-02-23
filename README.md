@@ -9,7 +9,7 @@
 ## 部署到远程
 
 ```
-docker run -it -v `pwd`/.:/app -p 9000:9000 -p 12345:12345 -p 8080:8080 python /bin/bash
+docker run -it --name=waf -v `pwd`/.:/app -p 9000:9000 -p 12345:12345 -p 8080:8080 -p 80:80 python /bin/bash
 cd app
 python3 -m venv .venv
 python3 -m pip install -r requirements.txt
