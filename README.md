@@ -8,6 +8,16 @@
 
 ## 部署到远程
 
+```
+docker run -it python -v `pwd`/.:/app /bin/bash
+cd app
+python3 -m venv .venv
+python3 -m pip install -r requirements.txt
+./start.sh
+```
+
+
+
 
 
 ## 项目结构简介
