@@ -105,7 +105,7 @@ def do_response_block(client_conn,client_req):
 
 	ip = client_conn.getpeername()[0]
 
-	block_message = b'HTTP/1.1 200 OK\r\nHost: 127.0.0.1:1025\r\nDate: Tue, 02 Feb 2021 11:18:17 GMT\r\nConnection: close\r\nX-Powered-By: PHP/7.3.22-(to be removed in future macOS)\r\nContent-type: text/html; charset=UTF-8\r\n\r\n访问不合法！已被拦截和记录。'
+	block_message = 'HTTP/1.1 200 OK\r\nHost: 127.0.0.1:1025\r\nDate: Tue, 02 Feb 2021 11:18:17 GMT\r\nConnection: close\r\nX-Powered-By: PHP/7.3.22-(to be removed in future macOS)\r\nContent-type: text/html; charset=UTF-8\r\n\r\n访问不合法！已被拦截和记录。'.encode("utf-8")
 
 	client_conn.sendall(block_message)
 	client_conn.close()

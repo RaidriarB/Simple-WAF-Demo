@@ -23,7 +23,7 @@
 
                         </div>
                         <div class="panel-right">
-                            <h3>8,457</h3>
+                            <h3>{{ flowsum }}</h3>
                             <strong>流量总数</strong>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="panel-right">
-                            <h3>52,160 </h3>
+                            <h3>{{ rulesum }}</h3>
                             <strong>规则总数</strong>
 
                         </div>
@@ -48,7 +48,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body easypiechart-panel">
                             <h4>可疑流量(LOG)</h4>
-                            <div class="easypiechart" id="easypiechart-orange" data-percent="55"><span class="percent">55%</span>
+                            <div class="easypiechart" id="easypiechart-orange" data-percent="{{ lograte }}"><span class="percent">{{ lograte }}%</span>
                             </div>
                         </div>
                     </div>
@@ -57,8 +57,8 @@
                     <div class="panel panel-default">
                         <div class="panel-body easypiechart-panel">
                             <h4>正常流量(PASS)</h4>
-                            <div class="easypiechart" id="easypiechart-teal" data-percent="84"><span
-                                    class="percent">84%</span>
+                            <div class="easypiechart" id="easypiechart-teal" data-percent="{{ passrate }}"><span
+                                    class="percent">{{ passrate }}%</span>
                             </div>
                         </div>
                     </div>
@@ -67,8 +67,8 @@
                     <div class="panel panel-default">
                         <div class="panel-body easypiechart-panel">
                             <h4>恶意流量(BLOCK)</h4>
-                            <div class="easypiechart" id="easypiechart-red" data-percent="46"><span
-                                    class="percent">46%</span>
+                            <div class="easypiechart" id="easypiechart-red" data-percent="{{ blockrate }}"><span
+                                    class="percent">{{ blockrate }}%</span>
                             </div>
                         </div>
                     </div>

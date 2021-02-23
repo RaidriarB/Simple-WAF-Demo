@@ -3,8 +3,13 @@ from django.urls import path,re_path
 from . import views
 
 urlpatterns = [
-    path('',views.IndexView.as_view(),name='index'),
-	path('index',views.IndexView.as_view(),name='index'),
+   #path('',views.IndexView.as_view(),name='index'),
+
+	#path('index',views.IndexView.as_view(),name='index'),
+    path('',views.index,name='index'),
+
+	path('index',views.index,name='index'),
+
     path('log',views.Log_index,name='log'),
     re_path(r'^log_del-(?P<nid>\d+)/', views.log_del),
     re_path(r'^log_detail-(?P<nid>\d+)/', views.log_detail),
