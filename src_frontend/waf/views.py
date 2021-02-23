@@ -7,9 +7,13 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.shortcuts import redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-# class IndexView(generic.TemplateView):
-#     template_name = 'waf/index.html'
 
+import socket
+def update_rules():
+    signal = "<-UPDATE->"
+    s = socket.socket()
+    s.connect(("0.0.0.0", 12345))
+    s.sendall(signal.encode())
 
 
 class RuleView(generic.ListView):
@@ -19,20 +23,10 @@ class RuleView(generic.ListView):
     def get_queryset(self):
         return Rule.objects.all()
 
-# class FormView(generic.TemplateView):
-#     template_name = 'waf/form.html'
-#
-# class ChartView(generic.TemplateView):
-#     template_name = 'waf/chart.html'
-#
-class EmptyView(generic.TemplateView):
-    template_name = 'waf/empty.html'
-#
-# class TabPanelView(generic.TemplateView):
-#     template_name = 'waf/tab-panel.html'
-#
-# class UIElementsView(generic.TemplateView):
-#     template_name = 'waf/ui-elements.html'
+class IndexView(generic.TemplateView):
+    context_object_name = 'index_list'
+    template_name = 'waf/index.html'
+    # TODO
 
 class WhitelistView(generic.ListView):
     template_name = 'waf/Whitelist.html'
@@ -50,6 +44,7 @@ class BlacklistView(generic.ListView):
 
 def rule_del(request,nid):  #删除
     Rule.objects.filter(id=nid).delete()
+    update_rules()
     return redirect("rule")
 
 def rule_edit(request,nid):  #修改
@@ -61,6 +56,7 @@ def rule_edit(request,nid):  #修改
         descriptionGet=request.POST.get("description")
         actionGet = request.POST.get("action")
         Rule.objects.filter(id=nid).update(content = contentGet, description = descriptionGet, action = actionGet)
+        update_rules()
         return redirect("rule")
 
 def rule_create(request):
@@ -71,6 +67,7 @@ def rule_create(request):
         descriptionGet=request.POST.get("description")
         actionGet = request.POST.get("action")
         Rule.objects.create(content = contentGet, description = descriptionGet, action = actionGet)
+        update_rules()
         return redirect("rule")
 
 def log_detail(request,nid):
@@ -84,6 +81,7 @@ def log_del(request,nid):  #删除
 #Whitelist
 def Whitelist_del(request,nid):  #删除
     Whitelist.objects.filter(id=nid).delete()
+    update_rules()
     return redirect("Whitelist")
 
 def Whitelist_edit(request,nid):  #修改
@@ -94,6 +92,7 @@ def Whitelist_edit(request,nid):  #修改
         urlGet=request.POST.get("url")
         ipGet = request.POST.get("ip")
         Whitelist.objects.filter(id=nid).update(url = urlGet, ip = ipGet)
+        update_rules()
         return redirect("Whitelist")
 
 def Whitelist_create(request):
@@ -103,10 +102,12 @@ def Whitelist_create(request):
         urlGet=request.POST.get("url")
         ipGet = request.POST.get("ip")
         Whitelist.objects.create(url = urlGet, ip = ipGet)
+        update_rules()
         return redirect("Whitelist")
 #Blacklist
 def Blacklist_del(request,nid):  #删除
     Blacklist.objects.filter(id=nid).delete()
+    update_rules()
     return redirect("Blacklist")
 
 def Blacklist_edit(request,nid):  #修改
@@ -117,6 +118,7 @@ def Blacklist_edit(request,nid):  #修改
         urlGet=request.POST.get("url")
         ipGet = request.POST.get("ip")
         Blacklist.objects.filter(id=nid).update(url = urlGet, ip = ipGet)
+        update_rules()
         return redirect("Blacklist")
 
 def Blacklist_create(request):
@@ -126,6 +128,7 @@ def Blacklist_create(request):
         urlGet=request.POST.get("url")
         ipGet = request.POST.get("ip")
         Blacklist.objects.create(url = urlGet, ip = ipGet)
+        update_rules()
         return redirect("Blacklist")
 
 def Log_index(request):
