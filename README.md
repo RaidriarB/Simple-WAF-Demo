@@ -9,7 +9,7 @@
 ## 部署到远程
 
 ```
-docker run -it python -v `pwd`/.:/app /bin/bash
+docker run -it python -v `pwd`/.:/app /bin/bash -p 9000:9000 -p 12345:12345 -p 8000:8000
 cd app
 python3 -m venv .venv
 python3 -m pip install -r requirements.txt
